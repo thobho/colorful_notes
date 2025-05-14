@@ -84,7 +84,7 @@
 
   <textarea id="songInput" rows="6" cols="50">
     4C 4D 4- 4E | 
-    2F 2- 2G 2A | 
+    2F 2- | 
     4H 4- 4C2 4- |
     8C 8D 8E 8F 4- 4G |    
   </textarea>
@@ -185,7 +185,9 @@
 
           const noteDiv = document.createElement('div');
           noteDiv.className = 'note';
-          noteDiv.style.flex = length;
+          const base = 1 / 4; // quarter note baseline
+          const flexLength = (1 / length) / base;
+          noteDiv.style.flex = flexLength;
           noteDiv.style.height = '90px';
           noteDiv.style.minWidth = '30px';
 
