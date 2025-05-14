@@ -229,15 +229,19 @@
 
     createLegend(); // initialize on load
 
-
     function exportAsImage() {
   const output = document.getElementById('output');
-  html2canvas(output).then(canvas => {
+
+  html2canvas(output, {
+    scale: 2, // 🔍 2x resolution
+    useCORS: true // allows external assets if needed
+  }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'song-visualization.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
   });
+}
 
 
 }
