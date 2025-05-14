@@ -2,66 +2,79 @@
   {
     "title": "WYSZŁY W POLE KURKI TRZY",
     "filePath": "songs/wyszly-w-pole-kurki-3.txt",
-    "icon": "fa-solid fa-kiwi-bird"
+    "icon": "fa-solid fa-kiwi-bird",
+    "youtube": "https://www.youtube.com/watch?v=WSBUwpV6qnk"
   },
   {
     "title": "PANIE JANIE",
     "filePath": "songs/panie-janie.txt",
-    "icon": "fa-solid fa-user"
+    "icon": "fa-solid fa-user",
+    "youtube": "https://www.youtube.com/watch?v=dzMLZrrj5Y0"
   },
   {
     "title": "SZŁY PCHŁY",
     "filePath": "songs/szly-pchly.txt",
-    "icon": "fa-solid fa-bug"
+    "icon": "fa-solid fa-bug",
+    "youtube": "https://www.youtube.com/watch?v=GzJBtZi1VqU"
   },
   {
-    "title": "WLAZŁ KOTEK",
+    "title": "WLAZŁ KOTEK NA PŁOTEK",
     "filePath": "songs/wlazl-kotek.txt",
-    "icon": "fa-solid fa-cat"
+    "icon": "fa-solid fa-cat",
+    "youtube": "https://www.youtube.com/watch?v=oFIcur948JY"
   },
   {
     "title": "KOŁA AUTOBUSU",
     "filePath": "songs/kola-autobusu.txt",
-    "icon": "fa-solid fa-bus"
+    "icon": "fa-solid fa-bus",
+    "youtube": "https://www.youtube.com/watch?v=KWWueGYVFys"
   },
   {
-    "title": "PIESKI MALE DWA",
+    "title": "PIESKI MAŁE DWA",
     "filePath": "songs/pieski-male-dwa.txt",
-    "icon": "fa-solid fa-dog"
+    "icon": "fa-solid fa-dog",
+    "youtube": "https://www.youtube.com/watch?v=o2EieV3RSFc"
   },
   {
     "title": "STARY DONALD",
     "filePath": "songs/stary-donald.txt",
-    "icon": "fa-solid fa-tractor"
+    "icon": "fa-solid fa-tractor",
+    "youtube": "https://www.youtube.com/watch?v=4gkpEFqcnMw"
   },
   {
     "title": "KOŁKO GRANISTE",
     "filePath": "songs/kolko-graniste.txt",
-    "icon": "fa-solid fa-circle"
+    "icon": "fa-solid fa-circle",
+    "youtube": "https://www.youtube.com/watch?v=VMG-TPbitZw"
   },
   {
     "title": "STO LAT",
     "filePath": "songs/sto-lat.txt",
-    "icon": "fa-solid fa-cake-candles"
+    "icon": "fa-solid fa-cake-candles",
+    "youtube": "https://www.youtube.com/watch?v=0vKiv1mMdOI"
   },
   {
     "title": "JESTEM SOBIE PRZEDSZKOLACZEK",
     "filePath": "songs/jestem-sobie-przedszkolaczek.txt",
-    "icon": "fa-solid fa-child"
+    "icon": "fa-solid fa-child",
+    "youtube": "https://www.youtube.com/watch?v=zenTiDmpWv8"
   },
   {
     "title": "BYŁA SOBIE ŻABKA MAŁA",
     "filePath": "songs/byla-sobie-zabka-mala.txt",
-    "icon": "fa-solid fa-frog"
+    "icon": "fa-solid fa-frog",
+    "youtube": "https://www.youtube.com/watch?v=qNz8R1MSEY4"
   },
   {
     "title": "POJEDIEMY NA ŁOW",
     "filePath": "songs/pojedziemy-na-low.txt",
-    "icon": "fa-solid fa-fish"
+    "icon": "fa-solid fa-fish",
+    "youtube": "https://www.youtube.com/watch?v=5FUHLlCRHB4"
   },
   {
     "title": "MARYSIA MA OWIECZKE",
     "filePath": "songs/marysia-ma-owieczke.txt",
-    "icon": "fa-solid fa-dove"
+    "icon": "fa-solid fa-dove",
+    "youtube": "https://www.youtube.com/watch?v=t4YW-jMlDfM"
   }
 ]

@@ -217,6 +217,11 @@
         margin-right: 0.6rem;
         color: var(--primary);
       }
+
+      .song-card iframe {
+        margin-top: 0.5rem;
+        box-shadow: var(--shadow);
+      }
   
       footer {
         margin-top: auto;
@@ -394,7 +399,6 @@
 
         songs.forEach(song => {
           const listItem = document.createElement('li');
-          const link = document.createElement('a');
 
           const songTitleParam = encodeURIComponent(song.title);
           const songFileParam = encodeURIComponent(song.filePath);
@@ -403,11 +407,31 @@
             ? `<i class="${song.icon}"></i>`
             : song.icon || `<i class="fa-solid fa-music"></i>`;
 
-          link.href = `song-visualizer.html?songTitle=${songTitleParam}&songFile=${songFileParam}&colorScheme=${encodeURIComponent(scheme)}`;
-          link.className = 'song-link';
-          link.innerHTML = `${icon} ${song.title}`;
+          const songLink = document.createElement('a');
+          songLink.href = `song-visualizer.html?songTitle=${songTitleParam}&songFile=${songFileParam}&colorScheme=${encodeURIComponent(scheme)}`;
+          songLink.className = 'song-link';
+          songLink.innerHTML = `${icon} ${song.title}`;
 
-          listItem.appendChild(link);
+          listItem.appendChild(songLink);
+
+          // 🎥 Embed YouTube player if available
+          if (song.youtube) {
+            const videoId = new URL(song.youtube).searchParams.get('v');
+            if (videoId) {
+              const iframe = document.createElement('iframe');
+              iframe.width = '100%';
+              iframe.height = '215';
+              iframe.style.border = 'none';
+              iframe.style.borderRadius = '8px';
+              iframe.style.marginTop = '0.5rem';
+              iframe.src = `https://www.youtube.com/embed/${videoId}`;
+              iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+              iframe.allowFullscreen = true;
+
+              listItem.appendChild(iframe);
+            }
+          }
+
           songListElement.appendChild(listItem);
         });
       } catch (error) {
