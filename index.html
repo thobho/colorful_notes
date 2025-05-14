@@ -172,60 +172,55 @@
     }
 
     function renderSong() {
-  const input = document.getElementById('songInput').value.trim();
-  const lines = input.split('|').map(line => line.trim()).filter(line => line);
-  const output = document.getElementById('output');
-  output.innerHTML = '';
+      const input = document.getElementById('songInput').value.trim();
+      const lines = input.split('|').map(line => line.trim()).filter(line => line);
+      const output = document.getElementById('output');
+      output.innerHTML = '';
 
-  lines.forEach(line => {
-    const tactDiv = document.createElement('div');
-    tactDiv.className = 'tact';
+      lines.forEach(line => {
+        const tactDiv = document.createElement('div');
+        tactDiv.className = 'tact';
 
-    const notes = line.split(/\s+/);
-    const parsedNotes = notes.map(noteStr => {
-      const isPause = noteStr.endsWith('-');
-      const length = parseInt(noteStr);
-      const note = isPause ? '-' : noteStr.slice(length.toString().length);
-      return { isPause, length, note };
-    });
+        const notes = line.split(/\s+/);
+        notes.forEach(noteStr => {
+          const isPause = noteStr.endsWith('-');
+          const length = parseInt(noteStr);
+          const note = isPause ? '-' : noteStr.slice(length.toString().length);
 
-    // Calculate total duration in the line
-    const totalLength = parsedNotes.reduce((sum, n) => sum + n.length, 0);
+          const noteDiv = document.createElement('div');
+          noteDiv.className = 'note';
+          const base = 1 / 4; // quarter note baseline
+          const flexLength = (1 / length) / base;
+          noteDiv.style.flex = flexLength;
+          noteDiv.style.height = '90px';
+          noteDiv.style.minWidth = '30px';
 
-    parsedNotes.forEach(({ isPause, length, note }) => {
-      const noteDiv = document.createElement('div');
-      noteDiv.className = 'note';
 
-      const flex = length / totalLength; // scale relative to line total
-      noteDiv.style.flex = flex;
-      noteDiv.style.height = '90px';
-      noteDiv.style.minWidth = '30px';
+          if (isPause) {
+            noteDiv.style.backgroundColor = 'transparent';
+            noteDiv.style.border = '2px dashed #aaa';
+            noteDiv.title = 'Pause';
+          } else {
+            noteDiv.style.backgroundColor = noteColors[note] || 'gray';
+            noteDiv.title = note;
+            noteDiv.textContent = note;
+            noteDiv.style.color = 'black'
 
-      if (isPause) {
-        noteDiv.style.backgroundColor = 'transparent';
-        noteDiv.style.border = '2px dashed #aaa';
-        noteDiv.title = 'Pause';
-      } else {
-        noteDiv.style.backgroundColor = noteColors[note] || 'gray';
-        noteDiv.title = note;
-        noteDiv.textContent = note;
-        noteDiv.style.color = 'black';
 
-        // Sound interaction
-        noteDiv.onmousedown = () => startNote(note);
-        noteDiv.onmouseup = stopNote;
-        noteDiv.onmouseleave = stopNote;
-        noteDiv.ontouchstart = () => startNote(note);
-        noteDiv.ontouchend = stopNote;
-      }
+            // Sound interaction
+            noteDiv.onmousedown = () => startNote(note);
+            noteDiv.onmouseup = stopNote;
+            noteDiv.onmouseleave = stopNote;
+            noteDiv.ontouchstart = () => startNote(note);
+            noteDiv.ontouchend = stopNote;
+          }
 
-      tactDiv.appendChild(noteDiv);
-    });
+          tactDiv.appendChild(noteDiv);
+        });
 
-    output.appendChild(tactDiv);
-  });
-}
-
+        output.appendChild(tactDiv);
+      });
+    }
 
     createLegend(); // initialize on load
 
