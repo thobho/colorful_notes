@@ -3,63 +3,186 @@
 <head>
   <meta charset="UTF-8" />
   <title>Colorful Song Visualizer - Song List</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9fb;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #3366cc;
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    footer {
+      margin-top: auto;
+      background-color: #f1f1f1;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: white;
-      margin: 0;
-      padding: 2rem;
     }
-    h1 {
-      color: royalblue;
+
+    .create-new {
+      background-color: #3366cc;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      text-align: center;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      transition: background-color 0.2s ease-in-out;
     }
+
+    .create-new:hover {
+      background-color: #264d99;
+    }
+
     ul {
       list-style: none;
       padding: 0;
-      width: 80%;
-      max-width: 600px;
+      width: 100%;
     }
+
     li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
-    a {
+
+    a.song-link {
       text-decoration: none;
       color: #333;
-      background-color: #f8f8f8;
-      padding: 0.8rem 1.2rem;
-      border-radius: 6px;
+      background-color: white;
+      padding: 1rem;
       display: block;
+      border-radius: 8px;
       border: 1px solid #ddd;
-      transition: background-color 0.2s ease-in-out;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.2s ease-in-out, background-color 0.2s;
     }
-    a:hover {
-      background-color: #eef;
+
+    a.song-link:hover {
+      background-color: #eef3ff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-    .create-new {
-        background-color: royalblue;
-        color: white;
-        text-align: center;
-        margin-bottom: 1.5rem;
+
+    a.song-link i {
+      margin-right: 0.6rem;
+      color: #3366cc;
     }
-    .create-new:hover {
-        background-color: darkblue;
+
+    .instructions {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+
+    .instructions h2 {
+      margin-top: 0;
+      color: #3366cc;
+      font-size: 1.4rem;
+    }
+
+    .instructions code {
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .instructions ul {
+      padding-left: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .instructions li {
+      margin-bottom: 0.4rem;
     }
   </style>
 </head>
 <body>
-  <h1>Song List</h1>
-  <a href="song-visualizer.html" class="create-new">Create New Song Visualization</a>
-  <ul id="songList">
-    <!-- Song links will be injected here by JavaScript -->
-  </ul>
+
+  <header>
+    <h1>🎶 Colorful Song Visualizer</h1>
+  </header>
+
+
+
+  <div class="container">
+    <section class="instructions">
+      <h2>📖 Instrukcja</h2>
+      <p>
+        Wpisywane nuty są zapisane w formacie typu <code>8C</code>, <code>4G</code>, <code>2F</code> itp., gdzie:
+      </p>
+      <ul>
+        <li><strong>Cyfra</strong> oznacza długość nuty:
+          <ul>
+            <li><code>1</code> – cała nuta</li>
+            <li><code>2</code> – półnuta</li>
+            <li><code>4</code> – ćwierćnuta</li>
+            <li><code>8</code> – ósemka</li>
+            <li>itd.</li>
+          </ul>
+        </li>
+        <li><strong>Litera</strong> oznacza nazwę dźwięku (skala C-dur): <code>C, D, E, F, G, A, B, C2</code></li>
+        <li>Możesz oddzielać takty używając pionowej kreski: <code>|</code></li>
+        <li>Przerwa (pauza) to np. <code>4-</code> – ćwierćnuta przerwy</li>
+      </ul>
+    
+      <h3>🎨 Kolory nut</h3>
+      <p>
+        Każdej nucie przypisany jest kolor. Możesz go zmienić w sekcji "Legenda" – kliknij na kolor obok nazwy nuty i wybierz nowy kolor z palety. Zmiana zostanie natychmiast odzwierciedlona na wizualizacji.
+      </p>
+    
+      <h3>⬛ Jak powstają pudełka z nutami?</h3>
+      <p>
+        Każda nuta jest przedstawiona jako kolorowe pudełko. Im krótsza nuta, tym mniejsze pudełko (np. <code>8C</code> jest węższe niż <code>2F</code>). Pauzy są oznaczone pustymi przerywanymi prostokątami.
+      </p>
+    </section>
+    <a href="song-visualizer.html" class="create-new">
+      ➕ Create New Song Visualization
+    </a>
+    <ul id="songList">
+      <!-- Song links will be injected here by JavaScript -->
+    </ul>
+  </div>
+
+  <footer>
+    &copy; 2025 Colorful Song Visualizer · Made with 🎵 and ❤️
+  </footer>
 
   <script>
-    // const songsRaw = `...`; // This will be removed
-    // function parseSongs(rawSongData) { ... } // This will be removed
-
     async function populateSongList() {
       const songListElement = document.getElementById('songList');
       try {
@@ -72,13 +195,15 @@
         songs.forEach(song => {
           const listItem = document.createElement('li');
           const link = document.createElement('a');
-          
+
           const songTitleParam = encodeURIComponent(song.title);
           const songFileParam = encodeURIComponent(song.filePath);
-          
+          const iconClass = song.icon || 'fa-solid fa-music';
+
           link.href = `song-visualizer.html?songTitle=${songTitleParam}&songFile=${songFileParam}`;
-          link.textContent = song.title;
-          
+          link.className = 'song-link';
+          link.innerHTML = `<i class="${iconClass}"></i> ${song.title}`;
+
           listItem.appendChild(link);
           songListElement.appendChild(listItem);
         });
@@ -90,5 +215,6 @@
 
     populateSongList();
   </script>
+
 </body>
 </html>

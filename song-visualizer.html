@@ -3,36 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <title>Colorful Song Visualizer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9fb;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #3366cc;
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    footer {
+      margin-top: auto;
+      background-color: #f1f1f1;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: white;
-      margin: 0;
-      padding: 2rem;
     }
 
-    button {
-      padding: 0.6rem 1.2rem;
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      cursor: pointer;
-      border: 2px solid royalblue;
-      border-radius: 6px;
-      background-color: white;
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #222;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: #3366cc;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      display: block;
+      text-align: center;
     }
 
     textarea {
       font-size: 1rem;
-      padding: 0.5rem;
+      padding: 0.75rem;
       border-radius: 6px;
       border: 1px solid #ccc;
-      height: 200px;             /* 👈 more height */
-      resize: vertical;          /* 👈 user can resize if needed */
-      overflow-y: auto;          /* 👈 show scroll if needed */
+      height: 180px;
+      resize: vertical;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #fff;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
+
+    button {
+      padding: 0.7rem 1.4rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      background-color: #3366cc;
+      color: white;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #264d99;
+    }
+
     #legend {
       display: flex;
       flex-wrap: wrap;
@@ -45,59 +107,71 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      background-color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      font-weight: 500;
     }
 
     #output {
       background-color: white;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1rem;
       align-items: center;
       width: 100%;
-      max-width: 80%;
-      margin-top: 2rem;
+      padding: 1rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
     }
 
     .tact {
       display: flex;
       width: 100%;
       justify-content: flex-start;
-      gap: 0; /* ❗ remove gaps between notes */
-      border-bottom: 1px solid #eee; /* optional line for visual separation */
+      gap: 0;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
     }
 
     .note {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       font-weight: bold;
-      color: black; /* ✅ Make letters readable on light backgrounds */
-      text-shadow: 0px 0px 3px white; /* ✅ Optional glow effect for contrast */
+      color: black;
+      text-shadow: 0px 0px 3px white;
       border-radius: 12px;
-      border: 2px solid rgba(0, 0, 0, 0.2); /* ✅ Stronger visible border */
-      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
       cursor: pointer;
-      margin-right: 2px; /* uniform spacing instead of flex gap */
-
-}
-
-
+      margin-right: 2px;
+    }
   </style>
 </head>
 <body>
-  <a href="index.html" style="display: block; margin-bottom: 1rem; text-align: center;">&larr; Back to Song List</a>
-  <h1 id="songTitleElement" style="text-align: center;">Colorful Song Visualizer</h1>
 
+  <header>
+    <h1>🎶 Colorful Song Visualizer</h1>
+  </header>
 
-  <div id="legend"></div>
+  <div class="container">
+    <a href="index.html">&larr; Back to Song List</a>
+    <h2 id="songTitleElement">Colorful Song Visualizer</h2>
 
-  <textarea id="songInput" rows="6" cols="50">
-    
-  </textarea>
+    <div id="legend"></div>
+    <textarea id="songInput" rows="6" cols="50"></textarea>
+    <div id="output"></div>
+    <button onclick="exportAsImage()">Export as Image</button>
+  </div>
 
-  <div id="output"></div>
-  <button onclick="exportAsImage()">Export as Image</button>
+  <footer>
+    &copy; 2025 Colorful Song Visualizer · Made with 🎵 and ❤️
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
     const noteLetters = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C2'];
 
@@ -197,7 +271,6 @@
           noteDiv.style.height = '90px';
           noteDiv.style.minWidth = '30px';
 
-
           if (isPause) {
             noteDiv.style.backgroundColor = 'transparent';
             noteDiv.style.border = '2px dashed #aaa';
@@ -206,10 +279,8 @@
             noteDiv.style.backgroundColor = noteColors[note] || 'gray';
             noteDiv.title = note;
             noteDiv.textContent = note;
-            noteDiv.style.color = 'black'
+            noteDiv.style.color = 'black';
 
-
-            // Sound interaction
             noteDiv.onmousedown = () => startNote(note);
             noteDiv.onmouseup = stopNote;
             noteDiv.onmouseleave = stopNote;
@@ -224,12 +295,9 @@
       });
     }
 
-    createLegend(); // initialize on load
-
-    // Add event listener for textarea input
+    createLegend();
     document.getElementById('songInput').addEventListener('input', renderSong);
 
-    // Load song from URL parameters
     window.onload = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const songTitle = urlParams.get('songTitle');
@@ -239,10 +307,8 @@
 
       if (songTitle) {
         document.title = songTitle + " - Song Visualizer";
-        if (songTitleElement) {
-            songTitleElement.textContent = songTitle;
-        }
-      } else if (songTitleElement) {
+        songTitleElement.textContent = songTitle;
+      } else {
         songTitleElement.textContent = "Create New Song";
         document.title = "Create New Song - Song Visualizer";
       }
@@ -261,27 +327,22 @@
           songInputElement.value = `Error loading song from ${songFile}. Please check the file path and console.`;
         }
       }
-      
-      createLegend(); 
+
+      createLegend();
     };
 
     function exportAsImage() {
-  const output = document.getElementById('output');
-
-  html2canvas(output, {
-    scale: 4, // 🔍 x resolution
-    useCORS: true // allows external assets if needed
-  }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'song-visualization.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  });
-}
-
-
-
+      const output = document.getElementById('output');
+      html2canvas(output, {
+        scale: 4,
+        useCORS: true
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'song-visualization.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
   </script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-</html> 
+</html>
