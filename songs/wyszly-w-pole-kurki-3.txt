@@ -1,7 +1,7 @@
-4C 4C 4G 4G |
-4A 4A 2G |
-4F 4F 4E 4E |
-4D 4D 2C |
+4C(Po-) 4C(-szły) 4G(w po-) 4G(-le) |
+4A(Kur-) 4A(-ki) 2G(trzy) |
+4F(i) 4F(gę-) 4E(-sie-) 4E(-go) |
+4D(so-) 4D(-bie) 2C(szły) |
 4G 4G 4F 4F |
 4E 4E 2D |
 4G 4G 4F 4F |
@@ -9,4 +9,4 @@
 4C 4C 4G 4G |
 4A 4A 2G |
 4F 4F 4E 4E |
-4D 4D 2C 
+4D 4D 2C
