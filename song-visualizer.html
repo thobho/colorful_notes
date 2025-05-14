@@ -175,17 +175,18 @@
   <script>
     const noteLetters = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C2'];
 
-    let noteColors = {
-      C: '#c90201',
-      D: '#fd6e37',
-      E: '#eeac24',
-      F: '#06c90e',
-      G: '#0face0',
-      A: '#0047bd',
-      B: '#9c049f',
-      C2: '#ffffff'
+    const colorSchemes = {
+      "Dzwoneczki Filipka": {
+        C: '#c90201', D: '#fd6e37', E: '#eeac24', F: '#06c90e',
+        G: '#0face0', A: '#0047bd', B: '#9c049f', C2: '#ffffff'
+      },
+      "Dzwoneczki Nastusi": {
+        C: '#fbb4ae', D: '#b3cde3', E: '#ccebc5', F: '#decbe4',
+        G: '#fed9a6', A: '#ffffcc', B: '#e5d8bd', C2: '#fddaec'
+      }
     };
 
+    let noteColors = {};
     const noteFiles = {
       C: 'c1.wav',
       D: 'd.wav',
@@ -295,41 +296,44 @@
       });
     }
 
-    createLegend();
-    document.getElementById('songInput').addEventListener('input', renderSong);
-
     window.onload = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const songTitle = urlParams.get('songTitle');
       const songFile = urlParams.get('songFile');
-      const songTitleElement = document.getElementById('songTitleElement');
-      const songInputElement = document.getElementById('songInput');
+      const scheme = urlParams.get('colorScheme');
+      const savedColors = localStorage.getItem('customNoteColors');
+
+      // Apply color scheme
+      if (savedColors && scheme) {
+        noteColors = JSON.parse(savedColors);
+      } else if (scheme && colorSchemes[scheme]) {
+        noteColors = { ...colorSchemes[scheme] };
+      } else {
+        noteColors = { ...colorSchemes["Classic"] };
+      }
 
       if (songTitle) {
         document.title = songTitle + " - Song Visualizer";
-        songTitleElement.textContent = songTitle;
-      } else {
-        songTitleElement.textContent = "Create New Song";
-        document.title = "Create New Song - Song Visualizer";
+        document.getElementById('songTitleElement').textContent = songTitle;
       }
 
       if (songFile) {
         try {
           const response = await fetch(songFile);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
           const songDataText = await response.text();
-          songInputElement.value = songDataText.trim();
+          document.getElementById('songInput').value = songDataText.trim();
           renderSong();
         } catch (error) {
           console.error("Could not load song file:", error);
-          songInputElement.value = `Error loading song from ${songFile}. Please check the file path and console.`;
+          document.getElementById('songInput').value = `Error loading song from ${songFile}. Please check the file path and console.`;
         }
       }
 
       createLegend();
     };
+
+    document.getElementById('songInput').addEventListener('input', renderSong);
 
     function exportAsImage() {
       const output = document.getElementById('output');

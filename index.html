@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8" />
   <title>Colorful Song Visualizer - Song List</title>
@@ -29,25 +29,72 @@
       font-size: 1.8rem;
     }
 
-    footer {
-      margin-top: auto;
-      background-color: #f1f1f1;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
-      border-top: 1px solid #ddd;
-    }
-
     .container {
       width: 80%;
       max-width: 960px;
       margin: auto;
       padding: 2rem;
-      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+
+    .instructions {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+
+    .instructions h2 {
+      margin-top: 0;
+      color: #3366cc;
+      font-size: 1.4rem;
+    }
+
+    .instructions code {
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .instructions ul {
+      padding-left: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .instructions li {
+      margin-bottom: 0.4rem;
+    }
+
+    #schemeSelect {
+      margin-top: 1rem;
+      font-size: 1rem;
+      padding: 0.4rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    #legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      font-weight: 500;
     }
 
     .create-new {
@@ -59,7 +106,7 @@
       text-decoration: none;
       font-size: 1rem;
       font-weight: bold;
-      margin-bottom: 2rem;
+      margin: 2rem 0;
       transition: background-color 0.2s ease-in-out;
     }
 
@@ -99,35 +146,14 @@
       color: #3366cc;
     }
 
-    .instructions {
-      background: #ffffff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-      margin-bottom: 2rem;
-      width: 100%;
-    }
-
-    .instructions h2 {
-      margin-top: 0;
-      color: #3366cc;
-      font-size: 1.4rem;
-    }
-
-    .instructions code {
-      background-color: #eee;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
-    }
-
-    .instructions ul {
-      padding-left: 1.2rem;
-      margin-top: 0.5rem;
-    }
-
-    .instructions li {
-      margin-bottom: 0.4rem;
+    footer {
+      margin-top: auto;
+      background-color: #f1f1f1;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      border-top: 1px solid #ddd;
     }
   </style>
 </head>
@@ -137,9 +163,8 @@
     <h1>🎶 Colorful Song Visualizer</h1>
   </header>
 
-
-
   <div class="container">
+
     <section class="instructions">
       <h2>📖 Instrukcja</h2>
       <p>
@@ -152,29 +177,32 @@
             <li><code>2</code> – półnuta</li>
             <li><code>4</code> – ćwierćnuta</li>
             <li><code>8</code> – ósemka</li>
-            <li>itd.</li>
           </ul>
         </li>
         <li><strong>Litera</strong> oznacza nazwę dźwięku (skala C-dur): <code>C, D, E, F, G, A, B, C2</code></li>
-        <li>Możesz oddzielać takty używając pionowej kreski: <code>|</code></li>
-        <li>Przerwa (pauza) to np. <code>4-</code> – ćwierćnuta przerwy</li>
+        <li>Oddziel takty pionową kreską: <code>|</code></li>
+        <li>Pauza to np. <code>4-</code> – ćwierćnuta przerwy</li>
       </ul>
-    
-      <h3>🎨 Kolory nut</h3>
+
+      <h3>🎨 Kolory dzwonków</h3>
       <p>
-        Każdej nucie przypisany jest kolor. Możesz go zmienić w sekcji "Legenda" – kliknij na kolor obok nazwy nuty i wybierz nowy kolor z palety. Zmiana zostanie natychmiast odzwierciedlona na wizualizacji.
+        Wybierz schemat kolorów dzwonków:
+        <br/>
+        <select id="schemeSelect"></select>
       </p>
-    
-      <h3>⬛ Jak powstają pudełka z nutami?</h3>
+      <div id="legend"></div>
+
+      <h3>⬛ Wizualizacja nut</h3>
       <p>
-        Każda nuta jest przedstawiona jako kolorowe pudełko. Im krótsza nuta, tym mniejsze pudełko (np. <code>8C</code> jest węższe niż <code>2F</code>). Pauzy są oznaczone pustymi przerywanymi prostokątami.
+        Każda nuta jest przedstawiona jako kolorowe pudełko. Im krótsza nuta, tym węższe pudełko.
+        Pauzy mają przerywane obramowanie.
       </p>
     </section>
-    <a href="song-visualizer.html" class="create-new">
-      ➕ Create New Song Visualization
-    </a>
+
+    <a href="song-visualizer.html" class="create-new">➕ Stwórz nową wizualizację</a>
+
     <ul id="songList">
-      <!-- Song links will be injected here by JavaScript -->
+      <!-- Song links will be injected here -->
     </ul>
   </div>
 
@@ -183,13 +211,78 @@
   </footer>
 
   <script>
+    const noteLetters = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C2'];
+    const colorSchemes = {
+      "Dzwoneczki Filipka": {
+        C: '#c90201', D: '#fd6e37', E: '#eeac24', F: '#06c90e',
+        G: '#0face0', A: '#0047bd', B: '#9c049f', C2: '#ffffff'
+      },
+      "Dzwoneczki Nastusi": {
+        C: '#fbb4ae', D: '#b3cde3', E: '#ccebc5', F: '#decbe4',
+        G: '#fed9a6', A: '#ffffcc', B: '#e5d8bd', C2: '#fddaec'
+      }
+    };
+
+    let noteColors = {};
+
+    function rgbToHex(rgb) {
+      const temp = document.createElement("div");
+      temp.style.color = rgb;
+      document.body.appendChild(temp);
+      const computed = getComputedStyle(temp).color;
+      document.body.removeChild(temp);
+      const result = computed.match(/\d+/g).map(x => parseInt(x).toString(16).padStart(2, '0'));
+      return `#${result.join('')}`;
+    }
+
+    function createLegend() {
+      const legendDiv = document.getElementById('legend');
+      legendDiv.innerHTML = '';
+
+      noteLetters.forEach(note => {
+        const colorInput = document.createElement('input');
+        colorInput.type = 'color';
+        colorInput.value = rgbToHex(noteColors[note] || 'gray');
+
+        colorInput.oninput = () => {
+          noteColors[note] = colorInput.value;
+          localStorage.setItem('customNoteColors', JSON.stringify(noteColors));
+        };
+
+        const label = document.createElement('label');
+        label.className = 'legend-item';
+        label.textContent = note;
+        label.appendChild(colorInput);
+        legendDiv.appendChild(label);
+      });
+    }
+
+    function populateSchemeSelector() {
+      const select = document.getElementById('schemeSelect');
+      Object.keys(colorSchemes).forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+      });
+
+      const defaultScheme = localStorage.getItem('bellColorScheme') || 'Classic';
+      select.value = defaultScheme;
+
+      select.onchange = () => {
+        const scheme = select.value;
+        noteColors = { ...colorSchemes[scheme] };
+        localStorage.setItem('bellColorScheme', scheme);
+        localStorage.setItem('customNoteColors', JSON.stringify(noteColors));
+        createLegend();
+      };
+    }
+
     async function populateSongList() {
       const songListElement = document.getElementById('songList');
       try {
         const response = await fetch('songs.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const songs = await response.json();
 
         songs.forEach(song => {
@@ -198,23 +291,36 @@
 
           const songTitleParam = encodeURIComponent(song.title);
           const songFileParam = encodeURIComponent(song.filePath);
-          const iconClass = song.icon || 'fa-solid fa-music';
+          const scheme = document.getElementById('schemeSelect').value;
+          const icon = song.icon?.startsWith('fa')
+            ? `<i class="${song.icon}"></i>`
+            : song.icon || `<i class="fa-solid fa-music"></i>`;
 
-          link.href = `song-visualizer.html?songTitle=${songTitleParam}&songFile=${songFileParam}`;
+          link.href = `song-visualizer.html?songTitle=${songTitleParam}&songFile=${songFileParam}&colorScheme=${encodeURIComponent(scheme)}`;
           link.className = 'song-link';
-          link.innerHTML = `<i class="${iconClass}"></i> ${song.title}`;
+          link.innerHTML = `${icon} ${song.title}`;
 
           listItem.appendChild(link);
           songListElement.appendChild(listItem);
         });
       } catch (error) {
         console.error("Could not load song list:", error);
-        songListElement.innerHTML = '<li>Error loading song list. Please check songs.json and the console.</li>';
+        songListElement.innerHTML = '<li>Błąd podczas ładowania listy piosenek. Sprawdź plik <code>songs.json</code> oraz konsolę.</li>';
       }
     }
 
+    // Load custom colors or default scheme
+    const savedColors = localStorage.getItem('customNoteColors');
+    if (savedColors) {
+      noteColors = JSON.parse(savedColors);
+    } else {
+      const defaultScheme = localStorage.getItem('bellColorScheme') || 'Classic';
+      noteColors = { ...colorSchemes[defaultScheme] };
+    }
+
+    populateSchemeSelector();
+    createLegend();
     populateSongList();
   </script>
-
 </body>
 </html>
