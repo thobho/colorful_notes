@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Colorful Song Visualizer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border: 2px solid royalblue;
+      border-radius: 6px;
+      background-color: white;
+    }
+
+    textarea {
+      font-size: 1rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      height: 200px;             /* 👈 more height */
+      resize: vertical;          /* 👈 user can resize if needed */
+      overflow-y: auto;          /* 👈 show scroll if needed */
+    }
+    #legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #output {
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      align-items: center;
+      width: 100%;
+      max-width: 80%;
+      margin-top: 2rem;
+    }
+
+    .tact {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      gap: 0; /* ❗ remove gaps between notes */
+      border-bottom: 1px solid #eee; /* optional line for visual separation */
+    }
+
+    .note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: black; /* ✅ Make letters readable on light backgrounds */
+      text-shadow: 0px 0px 3px white; /* ✅ Optional glow effect for contrast */
+      border-radius: 12px;
+      border: 2px solid rgba(0, 0, 0, 0.2); /* ✅ Stronger visible border */
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      margin-right: 2px; /* uniform spacing instead of flex gap */
+
+}
+
+
+  </style>
+</head>
+<body>
+  <a href="index.html" style="display: block; margin-bottom: 1rem; text-align: center;">&larr; Back to Song List</a>
+  <h1 id="songTitleElement" style="text-align: center;">Colorful Song Visualizer</h1>
+
+
+  <div id="legend"></div>
+
+  <textarea id="songInput" rows="6" cols="50">
+    
+  </textarea>
+
+  <button onclick="renderSong()">Render Song</button>
+
+  <div id="output"></div>
+  <button onclick="exportAsImage()">Export as Image</button>
+  <script>
+    const noteLetters = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C2'];
+
+    let noteColors = {
+      C: '#c90201',
+      D: '#fd6e37',
+      E: '#eeac24',
+      F: '#06c90e',
+      G: '#0face0',
+      A: '#0047bd',
+      B: '#9c049f',
+      C2: '#ffffff'
+    };
+
+    const noteFiles = {
+      C: 'c1.wav',
+      D: 'd.wav',
+      E: 'e.wav',
+      F: 'f.wav',
+      G: 'g.wav',
+      A: 'a.wav',
+      B: 'b.wav',
+      C2: 'c2.wav'
+    };
+
+    const legendDiv = document.getElementById('legend');
+    let currentAudio = null;
+
+    function rgbToHex(rgb) {
+      const temp = document.createElement("div");
+      temp.style.color = rgb;
+      document.body.appendChild(temp);
+      const computed = getComputedStyle(temp).color;
+      document.body.removeChild(temp);
+      const result = computed.match(/\d+/g).map(x => parseInt(x).toString(16).padStart(2, '0'));
+      return `#${result.join('')}`;
+    }
+
+    function createLegend() {
+      legendDiv.innerHTML = '';
+      noteLetters.forEach(note => {
+        const colorInput = document.createElement('input');
+        colorInput.type = 'color';
+        colorInput.value = rgbToHex(noteColors[note] || 'gray');
+        colorInput.oninput = () => {
+          noteColors[note] = colorInput.value;
+        };
+
+        const label = document.createElement('label');
+        label.className = 'legend-item';
+        label.textContent = note;
+        label.appendChild(colorInput);
+        legendDiv.appendChild(label);
+      });
+    }
+
+    function startNote(note) {
+      stopNote(); // Stop any currently playing audio
+      const filename = noteFiles[note];
+      if (!filename) return;
+
+      currentAudio = new Audio(`sounds/${filename}`);
+      currentAudio.loop = true;
+      currentAudio.play();
+    }
+
+    function stopNote() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+    }
+
+    function renderSong() {
+      const input = document.getElementById('songInput').value.trim();
+      const lines = input.split('|').map(line => line.trim()).filter(line => line);
+      const output = document.getElementById('output');
+      output.innerHTML = '';
+
+      lines.forEach(line => {
+        const tactDiv = document.createElement('div');
+        tactDiv.className = 'tact';
+
+        const notes = line.split(/\s+/);
+        notes.forEach(noteStr => {
+          const isPause = noteStr.endsWith('-');
+          const length = parseInt(noteStr);
+          const note = isPause ? '-' : noteStr.slice(length.toString().length);
+
+          const noteDiv = document.createElement('div');
+          noteDiv.className = 'note';
+          const base = 1 / 4; // quarter note baseline
+          const flexLength = (1 / length) / base;
+          noteDiv.style.flex = flexLength;
+          noteDiv.style.height = '90px';
+          noteDiv.style.minWidth = '30px';
+
+
+          if (isPause) {
+            noteDiv.style.backgroundColor = 'transparent';
+            noteDiv.style.border = '2px dashed #aaa';
+            noteDiv.title = 'Pause';
+          } else {
+            noteDiv.style.backgroundColor = noteColors[note] || 'gray';
+            noteDiv.title = note;
+            noteDiv.textContent = note;
+            noteDiv.style.color = 'black'
+
+
+            // Sound interaction
+            noteDiv.onmousedown = () => startNote(note);
+            noteDiv.onmouseup = stopNote;
+            noteDiv.onmouseleave = stopNote;
+            noteDiv.ontouchstart = () => startNote(note);
+            noteDiv.ontouchend = stopNote;
+          }
+
+          tactDiv.appendChild(noteDiv);
+        });
+
+        output.appendChild(tactDiv);
+      });
+    }
+
+    createLegend(); // initialize on load
+
+    // Load song from URL parameters
+    window.onload = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const songTitle = urlParams.get('songTitle');
+      const songFile = urlParams.get('songFile');
+      const songTitleElement = document.getElementById('songTitleElement');
+      const songInputElement = document.getElementById('songInput');
+
+      if (songTitle) {
+        document.title = songTitle + " - Song Visualizer";
+        if (songTitleElement) {
+            songTitleElement.textContent = songTitle;
+        }
+      } else if (songTitleElement) {
+        songTitleElement.textContent = "Create New Song";
+        document.title = "Create New Song - Song Visualizer";
+      }
+
+      if (songFile) {
+        try {
+          const response = await fetch(songFile);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const songDataText = await response.text();
+          songInputElement.value = songDataText.trim();
+          renderSong();
+        } catch (error) {
+          console.error("Could not load song file:", error);
+          songInputElement.value = `Error loading song from ${songFile}. Please check the file path and console.`;
+        }
+      }
+      
+      createLegend(); 
+    };
+
+    function exportAsImage() {
+  const output = document.getElementById('output');
+
+  html2canvas(output, {
+    scale: 4, // 🔍 x resolution
+    useCORS: true // allows external assets if needed
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'song-visualization.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+}
+
+
+
+  </script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</html> 
