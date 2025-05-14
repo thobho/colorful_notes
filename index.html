@@ -88,24 +88,15 @@
       }
   
       .instructions {
-        background: var(--box-bg);
-        padding: 2rem;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        margin-bottom: 2rem;
-        width: 100%;
-        line-height: 1.6;
         overflow: hidden;
         max-height: 1000px;
         transition: max-height 0.4s ease, opacity 0.4s ease;
         opacity: 1;
       }
-  
+
       .instructions.hidden {
         max-height: 0;
         opacity: 0;
-        padding: 0;
-        margin-bottom: 0;
       }
   
       .instructions h2 {
@@ -245,13 +236,13 @@
   </header>
 
   <nav class="menu-bar">
-    <a href="#" id="toggleInstructions" class="menu-button">📘 Instrukcja</a>
+    <a href="#" id="toggleInstructions" class="menu-button">📘 Pokaż instrukcję</a>
     <a href="song-visualizer.html" class="menu-button" id="createNewLink">➕ Stwórz wizualizację</a>
   </nav>
 
 
   <div class="container">
-    <section class="instructions">
+    <section class="instructions hidden">
       <h2>📖 Instrukcja</h2>
       <p>
         Wpisywane nuty są zapisane w formacie typu <code>8C</code>, <code>4G</code>, <code>2F</code> itp., gdzie:
