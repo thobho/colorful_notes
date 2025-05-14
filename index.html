@@ -25,12 +25,14 @@
     }
 
     textarea {
-      font-size: 1rem;
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  height: 200px;             /* 👈 more height */
+  resize: vertical;          /* 👈 user can resize if needed */
+  overflow-y: auto;          /* 👈 show scroll if needed */
+}
     #legend {
       display: flex;
       flex-wrap: wrap;
@@ -87,7 +89,7 @@
   <textarea id="songInput" rows="6" cols="50">
     4C 4D 4- 4E | 
     2F 2- | 
-    4H 4- 4C2 4- |
+    4B 4- 4C2 4- |
     8C 8D 8E 8F 4- 4C2 |    
   </textarea>
 
@@ -96,7 +98,7 @@
   <div id="output"></div>
   <button onclick="exportAsImage()">Export as Image</button>
   <script>
-    const noteLetters = ['C', 'D', 'E', 'F', 'G', 'A', 'H', 'C2'];
+    const noteLetters = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C2'];
 
     let noteColors = {
       C: '#c90201',
@@ -105,7 +107,7 @@
       F: '#06c90e',
       G: '#0face0',
       A: '#0047bd',
-      H: '#9c049f',
+      B: '#9c049f',
       C2: '#ffffff'
     };
 
@@ -116,7 +118,7 @@
       F: 'f.wav',
       G: 'g.wav',
       A: 'a.wav',
-      H: 'b.wav',
+      B: 'b.wav',
       C2: 'c2.wav'
     };
 
