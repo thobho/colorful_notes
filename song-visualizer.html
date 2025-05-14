@@ -249,52 +249,71 @@
     }
 
     function renderSong() {
-      const input = document.getElementById('songInput').value.trim();
-      const lines = input.split('|').map(line => line.trim()).filter(line => line);
-      const output = document.getElementById('output');
-      output.innerHTML = '';
+  const input = document.getElementById('songInput').value.trim();
+  const lines = input.split('|').map(line => line.trim()).filter(line => line);
+  const output = document.getElementById('output');
+  output.innerHTML = '';
 
-      lines.forEach(line => {
-        const tactDiv = document.createElement('div');
-        tactDiv.className = 'tact';
+  lines.forEach(line => {
+    const tactDiv = document.createElement('div');
+    tactDiv.className = 'tact';
 
-        const notes = line.split(/\s+/);
-        notes.forEach(noteStr => {
-          const isPause = noteStr.endsWith('-');
-          const length = parseInt(noteStr);
-          const note = isPause ? '-' : noteStr.slice(length.toString().length);
+    // Match 4C(Po), 4D(szły), 4G(w po), 4-, etc.
+    const noteRegex = /(\d+)([A-G]2?)(?:\((.*?)\))?|\d+-/g;
+    let match;
 
-          const noteDiv = document.createElement('div');
-          noteDiv.className = 'note';
-          const base = 1 / 4; // quarter note baseline
-          const flexLength = (1 / length) / base;
-          noteDiv.style.flex = flexLength;
-          noteDiv.style.height = '90px';
-          noteDiv.style.minWidth = '30px';
+    while ((match = noteRegex.exec(line)) !== null) {
+      const full = match[0];
+      const isPause = full.endsWith('-');
+      const length = parseInt(match[1] || full);
+      const base = 1 / 4;
+      const flexLength = (1 / length) / base;
 
-          if (isPause) {
-            noteDiv.style.backgroundColor = 'transparent';
-            noteDiv.style.border = '2px dashed #aaa';
-            noteDiv.title = 'Pause';
-          } else {
-            noteDiv.style.backgroundColor = noteColors[note] || 'gray';
-            noteDiv.title = note;
-            noteDiv.textContent = note;
-            noteDiv.style.color = 'black';
+      const note = isPause ? '-' : match[2];
+      const label = isPause ? '' : (match[3] ?? '🎵');  // <-- default to 🎵 if not provided
 
-            noteDiv.onmousedown = () => startNote(note);
-            noteDiv.onmouseup = stopNote;
-            noteDiv.onmouseleave = stopNote;
-            noteDiv.ontouchstart = () => startNote(note);
-            noteDiv.ontouchend = stopNote;
-          }
+      const noteDiv = document.createElement('div');
+      noteDiv.className = 'note';
+      noteDiv.style.flex = flexLength;
+      noteDiv.style.height = '90px';
+      noteDiv.style.minWidth = '30px';
+      noteDiv.style.position = 'relative';
+      noteDiv.style.justifyContent = 'center';
 
-          tactDiv.appendChild(noteDiv);
-        });
+      if (isPause) {
+        noteDiv.style.backgroundColor = 'transparent';
+        noteDiv.style.border = '2px dashed #aaa';
+        noteDiv.title = 'Pause';
+      } else {
+        noteDiv.style.backgroundColor = noteColors[note] || 'gray';
+        noteDiv.title = note;
+        noteDiv.textContent = label;
 
-        output.appendChild(tactDiv);
-      });
+        const sup = document.createElement('div');
+        sup.textContent = note.toUpperCase();
+        sup.style.position = 'absolute';
+        sup.style.top = '4px';
+        sup.style.right = '6px';
+        sup.style.fontSize = '0.7rem';
+        sup.style.opacity = '0.8';
+        noteDiv.appendChild(sup);
+
+        noteDiv.onmousedown = () => startNote(note);
+        noteDiv.onmouseup = stopNote;
+        noteDiv.onmouseleave = stopNote;
+        noteDiv.ontouchstart = () => startNote(note);
+        noteDiv.ontouchend = stopNote;
+      }
+
+      tactDiv.appendChild(noteDiv);
     }
+
+    output.appendChild(tactDiv);
+  });
+}
+
+
+
 
     window.onload = async () => {
       const urlParams = new URLSearchParams(window.location.search);
