@@ -1,54 +1,67 @@
 [
   {
     "title": "WYSZŁY W POLE KURKI TRZY",
-    "filePath": "songs/wyszly-w-pole-kurki-3.txt"
+    "filePath": "songs/wyszly-w-pole-kurki-3.txt",
+    "icon": "fa-solid fa-kiwi-bird"
   },
   {
     "title": "PANIE JANIE",
-    "filePath": "songs/panie-janie.txt"
+    "filePath": "songs/panie-janie.txt",
+    "icon": "fa-solid fa-user"
   },
   {
     "title": "SZŁY PCHŁY",
-    "filePath": "songs/szly-pchly.txt"
+    "filePath": "songs/szly-pchly.txt",
+    "icon": "fa-solid fa-bug"
   },
   {
     "title": "WLAZŁ KOTEK",
-    "filePath": "songs/wlazl-kotek.txt"
+    "filePath": "songs/wlazl-kotek.txt",
+    "icon": "fa-solid fa-cat"
   },
   {
     "title": "KOŁA AUTOBUSU",
-    "filePath": "songs/kola-autobusu.txt"
+    "filePath": "songs/kola-autobusu.txt",
+    "icon": "fa-solid fa-bus"
   },
   {
     "title": "PIESKI MALE DWA",
-    "filePath": "songs/pieski-male-dwa.txt"
+    "filePath": "songs/pieski-male-dwa.txt",
+    "icon": "fa-solid fa-dog"
   },
   {
     "title": "STARY DONALD",
-    "filePath": "songs/stary-donald.txt"
+    "filePath": "songs/stary-donald.txt",
+    "icon": "fa-solid fa-tractor"
   },
   {
     "title": "KOŁKO GRANISTE",
-    "filePath": "songs/kolko-graniste.txt"
+    "filePath": "songs/kolko-graniste.txt",
+    "icon": "fa-solid fa-circle"
   },
   {
     "title": "STO LAT",
-    "filePath": "songs/sto-lat.txt"
+    "filePath": "songs/sto-lat.txt",
+    "icon": "fa-solid fa-cake-candles"
   },
   {
     "title": "JESTEM SOBIE PRZEDSZKOLACZEK",
-    "filePath": "songs/jestem-sobie-przedszkolaczek.txt"
+    "filePath": "songs/jestem-sobie-przedszkolaczek.txt",
+    "icon": "fa-solid fa-child"
   },
   {
     "title": "BYŁA SOBIE ŻABKA MAŁA",
-    "filePath": "songs/byla-sobie-zabka-mala.txt"
+    "filePath": "songs/byla-sobie-zabka-mala.txt",
+    "icon": "fa-solid fa-frog"
   },
   {
     "title": "POJEDIEMY NA ŁOW",
-    "filePath": "songs/pojedziemy-na-low.txt"
+    "filePath": "songs/pojedziemy-na-low.txt",
+    "icon": "fa-solid fa-fish"
   },
   {
     "title": "MARYSIA MA OWIECZKE",
-    "filePath": "songs/marysia-ma-owieczke.txt"
+    "filePath": "songs/marysia-ma-owieczke.txt",
+    "icon": "fa-solid fa-dove"
   }
-] 
+]
