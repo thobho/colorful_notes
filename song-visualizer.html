@@ -96,8 +96,6 @@
     
   </textarea>
 
-  <button onclick="renderSong()">Render Song</button>
-
   <div id="output"></div>
   <button onclick="exportAsImage()">Export as Image</button>
   <script>
@@ -226,6 +224,9 @@
     }
 
     createLegend(); // initialize on load
+
+    // Add event listener for textarea input
+    document.getElementById('songInput').addEventListener('input', renderSong);
 
     // Load song from URL parameters
     window.onload = async () => {
