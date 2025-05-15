@@ -219,6 +219,20 @@
         margin-right: 0.6rem;
         color: var(--primary);
       }
+
+      .song-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow);
+        transition: box-shadow 0.3s ease;
+      }
+
+      .song-card:hover {
+        box-shadow: var(--hover-shadow);
+      }
   
       footer {
         margin-top: auto;
@@ -387,8 +401,10 @@
 }
 
 
-    async function populateSongList() {
+async function populateSongList() {
       const songListElement = document.getElementById('songList');
+      songListElement.innerHTML = ''; // clear existing content
+
       try {
         const response = await fetch('songs.json');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -396,6 +412,9 @@
 
         songs.forEach(song => {
           const listItem = document.createElement('li');
+
+          const card = document.createElement('div');
+          card.className = 'song-card';
 
           const songTitleParam = encodeURIComponent(song.title);
           const songFileParam = encodeURIComponent(song.filePath);
@@ -409,7 +428,7 @@
           songLink.className = 'song-link';
           songLink.innerHTML = `${icon} ${song.title}`;
 
-          listItem.appendChild(songLink);
+          card.appendChild(songLink);
 
           // 🎥 Embed YouTube player if available
           if (song.youtube) {
@@ -425,10 +444,11 @@
               iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
               iframe.allowFullscreen = true;
 
-              listItem.appendChild(iframe);
+              card.appendChild(iframe);
             }
           }
 
+          listItem.appendChild(card);
           songListElement.appendChild(listItem);
         });
       } catch (error) {
